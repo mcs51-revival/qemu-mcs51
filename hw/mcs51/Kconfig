@@ -1,0 +1,2 @@
+config AT89C52
+    bool

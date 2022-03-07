@@ -1,0 +1,2 @@
+config MCS51
+    bool

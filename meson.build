@@ -2008,6 +2008,7 @@ disassemblers = {
   'i386' : ['CONFIG_I386_DIS'],
   'x86_64' : ['CONFIG_I386_DIS'],
   'm68k' : ['CONFIG_M68K_DIS'],
+  'mcs51' : ['CONFIG_MCS51_DIS'],
   'microblaze' : ['CONFIG_MICROBLAZE_DIS'],
   'mips' : ['CONFIG_MIPS_DIS'],
   'nios2' : ['CONFIG_NIOS2_DIS'],
