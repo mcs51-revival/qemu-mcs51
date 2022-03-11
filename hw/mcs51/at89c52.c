@@ -22,18 +22,29 @@
 #include "qapi/error.h"
 #include "qom/object.h"
 #include "hw/boards.h"
+#include "qemu/datadir.h"
+#include "hw/loader.h"
+#include "elf.h"
+
+static void at89c52_machine_init(MachineState *machine)
+{
+
+
+}
 
 static void at89c52_class_init(ObjectClass *oc, void *data)
 {
     MachineClass *mc = MACHINE_CLASS(oc);
 
-    mc->default_cpus = 1;
-    mc->min_cpus = mc->default_cpus;
-    mc->max_cpus = mc->default_cpus;
-    mc->no_floppy = 1;
-    mc->no_cdrom = 1;
-    mc->no_parallel = 1;
-    mc->no_sdcard = 1;
+    mc->desc            = "Microcontroller with 8K Bytes Flash",
+    mc->init            = at89c52_machine_init,
+    mc->default_cpus    = 1;
+    mc->min_cpus        = mc->default_cpus;
+    mc->max_cpus        = mc->default_cpus;
+    mc->no_floppy       = 1;
+    mc->no_cdrom        = 1;
+    mc->no_parallel     = 1;
+    mc->no_sdcard       = 1;
 }
 
 static const TypeInfo at89c52_machine_types[] = {
@@ -41,6 +52,7 @@ static const TypeInfo at89c52_machine_types[] = {
         .name       = MACHINE_TYPE_NAME("at89c52"),
         .parent     = TYPE_MACHINE,
         .class_init = at89c52_class_init,
+        .abstract   = true,
     },
 };
 

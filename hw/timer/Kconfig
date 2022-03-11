@@ -60,3 +60,9 @@ config STELLARIS_GPTM
 
 config AVR_TIMER16
     bool
+
+config MCS51_TIMER8
+    bool
+
+config MCS51_TIMER16
+    bool

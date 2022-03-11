@@ -1,5 +1,5 @@
 /*
- * QEMU MCS-51 CPU helpers
+ * QEMU MCS-51 MCU
  *
  * Copyright (c) 2022 John Sanpe
  *
@@ -18,10 +18,33 @@
  * <http://www.gnu.org/licenses/lgpl-2.1.html>
  */
 
-DEF_HELPER_1(wdr, void, env)
-DEF_HELPER_1(debug, noreturn, env)
-DEF_HELPER_1(break, noreturn, env)
-DEF_HELPER_1(sleep, noreturn, env)
-DEF_HELPER_1(unsupported, noreturn, env)
-DEF_HELPER_3(fullwr, void, env, i32, i32)
-DEF_HELPER_2(fullrd, tl, env, i32)
+#ifndef HW_MCS51_MCS51_H
+#define HW_MCS51_MCS51_H
+
+#include "hw/char/mcs51_uart.h"
+#include "hw/timer/mcs51_timer8.h"
+#include "hw/timer/mcs51_timer16.h"
+#include "hw/misc/mcs51_power.h"
+#include "hw/intc/mcs51.h"
+#include "target/mcs51/cpu.h"
+#include "qom/object.h"
+
+#define TYPE_MCS51_MCU "mcs51"
+typedef struct MCS51McuState MCS51McuState;
+DECLARE_INSTANCE_CHECKER(MCS51McuState, MCS51_MCU, TYPE_MCS51_MCU)
+
+struct MCS51McuState {
+    SysBusDevice parent_obj;
+
+    MCS51CPU cpu;
+    MemoryRegion flash;
+    MemoryRegion sram;
+    DeviceState *io;
+
+    MCS51Timer8State timer8;
+    MCS51Timer16State timer16;
+    MCS51UartState uart;
+    MCS51PowerState pwr;
+};
+
+#endif  /* HW_MCS51_MCS51_H */

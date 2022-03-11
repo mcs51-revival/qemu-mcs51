@@ -1,5 +1,5 @@
 /*
- * MCS-51 uart
+ * MCS-51 UART
  *
  * Copyright (c) 2022 John Sanpe
  *
@@ -19,23 +19,33 @@
  */
 
 #include "qemu/osdep.h"
-#include "hw/char/avr_usart.h"
+#include "hw/char/mcs51_uart.h"
 #include "qemu/log.h"
 #include "hw/irq.h"
 #include "hw/qdev-properties.h"
 #include "hw/qdev-properties-system.h"
 
-static const TypeInfo avr_usart_info = {
-    .name          = TYPE_AVR_USART,
-    .parent        = TYPE_SYS_BUS_DEVICE,
-    .instance_size = sizeof(AVRUsartState),
-    .instance_init = avr_usart_init,
-    .class_init    = avr_usart_class_init,
-};
-
-static void avr_usart_register_types(void)
+static void mcs51_uart_init(Object *obj)
 {
-    type_register_static(&avr_usart_info);
+
 }
 
-type_init(avr_usart_register_types)
+static void mcs51_uart_class_init(ObjectClass *klass, void *data)
+{
+
+}
+
+static const TypeInfo mcs51_uart_info = {
+    .name          = TYPE_MCS51_UART,
+    .parent        = TYPE_SYS_BUS_DEVICE,
+    .instance_size = sizeof(MCS51UartState),
+    .instance_init = mcs51_uart_init,
+    .class_init    = mcs51_uart_class_init,
+};
+
+static void mcs51_uart_register_types(void)
+{
+    type_register_static(&mcs51_uart_info);
+}
+
+type_init(mcs51_uart_register_types)

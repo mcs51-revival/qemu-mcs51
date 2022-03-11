@@ -1,5 +1,5 @@
 /*
- * MCS-51 8bit timer
+ * QEMU MCS-51 MCU
  *
  * Copyright (c) 2022 John Sanpe
  *
@@ -19,38 +19,40 @@
  */
 
 #include "qemu/osdep.h"
-#include "hw/timer/mcs51_timer8.h"
-#include "migration/vmstate.h"
-#include "hw/irq.h"
-#include "hw/sysbus.h"
-#include "hw/qdev-clock.h"
-#include "qemu/timer.h"
-#include "qemu/log.h"
 #include "qemu/module.h"
+#include "qemu/units.h"
 #include "qapi/error.h"
-#include "trace.h"
+#include "exec/memory.h"
+#include "exec/address-spaces.h"
+#include "sysemu/sysemu.h"
+#include "hw/qdev-properties.h"
+#include "hw/sysbus.h"
+#include "qom/object.h"
+#include "hw/misc/unimp.h"
+#include "mcs51.h"
 
-static void mcs51_timer8_init(Object *obj)
-{
+struct MCS51McuClass {
 
-}
-
-static void mcs51_timer8_class_init(ObjectClass *klass, void *data)
-{
-
-}
-
-static const TypeInfo mcs51_timer8_info = {
-    .name           = TYPE_MCS51_TIMER8,
-    .parent         = TYPE_SYS_BUS_DEVICE,
-    .instance_size  = sizeof(MCS51Timer8State),
-    .instance_init  = mcs51_timer8_init,
-    .class_init     = mcs51_timer8_class_init,
 };
 
-static void mcs51_timer8_register_types(void)
+typedef struct MCS51McuClass MCS51McuClass;
+DECLARE_CLASS_CHECKERS(MCS51McuClass, MCS51_MCU, TYPE_MCS51_MCU)
+
+static void mcs51_class_init(ObjectClass *oc, void *data)
 {
-    type_register_static(&mcs51_timer8_info);
+
+
 }
 
-type_init(mcs51_timer8_register_types)
+static const TypeInfo mcs51_mcu_types[] = {
+    {
+        .name           = TYPE_MCS51_MCU,
+        .parent         = TYPE_SYS_BUS_DEVICE,
+        .instance_size  = sizeof(MCS51McuState),
+        .class_size     = sizeof(MCS51McuClass),
+        .class_init     = mcs51_class_init,
+        .abstract       = true,
+    }
+};
+
+DEFINE_TYPES(mcs51_mcu_types)

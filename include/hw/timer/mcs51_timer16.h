@@ -1,5 +1,5 @@
 /*
- * MCS-51 8bit timer
+ * MCS-51 Timer16
  *
  * Copyright (c) 2022 John Sanpe
  *
@@ -18,39 +18,18 @@
  * <http://www.gnu.org/licenses/lgpl-2.1.html>
  */
 
-#include "qemu/osdep.h"
-#include "hw/timer/mcs51_timer8.h"
-#include "migration/vmstate.h"
-#include "hw/irq.h"
+#ifndef HW_TIMER_MCS51_TIMER16_H
+#define HW_TIMER_MCS51_TIMER16_H
+
 #include "hw/sysbus.h"
-#include "hw/qdev-clock.h"
 #include "qemu/timer.h"
-#include "qemu/log.h"
-#include "qemu/module.h"
-#include "qapi/error.h"
-#include "trace.h"
+#include "qom/object.h"
 
-static void mcs51_timer8_init(Object *obj)
-{
+#define TYPE_MCS51_TIMER16 "mcs51-timer16"
+OBJECT_DECLARE_SIMPLE_TYPE(MCS51Timer16State, MCS51_TIMER16)
 
-}
+struct MCS51Timer16State {
 
-static void mcs51_timer8_class_init(ObjectClass *klass, void *data)
-{
-
-}
-
-static const TypeInfo mcs51_timer8_info = {
-    .name           = TYPE_MCS51_TIMER8,
-    .parent         = TYPE_SYS_BUS_DEVICE,
-    .instance_size  = sizeof(MCS51Timer8State),
-    .instance_init  = mcs51_timer8_init,
-    .class_init     = mcs51_timer8_class_init,
 };
 
-static void mcs51_timer8_register_types(void)
-{
-    type_register_static(&mcs51_timer8_info);
-}
-
-type_init(mcs51_timer8_register_types)
+#endif  /* HW_TIMER_MCS51_TIMER16_H */

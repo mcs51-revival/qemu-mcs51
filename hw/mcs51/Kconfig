@@ -1,2 +1,7 @@
 config AT89C52
     bool
+    select MCS51_IRQC
+    select MCS51_TIMER8
+    select MCS51_TIMER16
+    select MCS51_UART
+    select MCS51_POWER

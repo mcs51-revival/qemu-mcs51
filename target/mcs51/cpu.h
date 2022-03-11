@@ -31,23 +31,33 @@
 #define MMU_CODE_IDX 0
 #define MMU_DATA_IDX 1
 
+#define MCS51_SFR_SP    0x81
+#define MCS51_SFR_DPL   0x82
+#define MCS51_SFR_DPH   0x83
+#define MCS51_SFR_PSW   0xd0
+#define MCS51_SFR_ACC   0xe0
+#define MCS51_SFR_B     0xf0
+
 /* Number of CPU registers */
 #define NUMBER_OF_CPU_REGISTERS 32
 
 typedef struct CPUMCS51State {
     uint8_t reg[NUMBER_OF_CPU_REGISTERS];
 
-    uint8_t dpl, dph;
-    uint8_t acc, b;
-    uint8_t sp, pc;
+    uint8_t dpl;        /*  */
+    uint8_t dph;        /*  */
+    uint8_t acc;        /*  */
+    uint8_t b;          /*  */
+    uint8_t sp;         /*  */
+    uint8_t pc;         /*  */
 
-    uint8_t pswCY;   /* 0x00000001 1 bit */
-    uint8_t pswAC;   /* 0x00000001 1 bit */
-    uint8_t pswF0;   /* 0x00000001 1 bit */
-    uint8_t pswRS1;  /* 0x00000001 1 bit */
-    uint8_t pswRS0;  /* 0x00000001 1 bit */
-    uint8_t pswOV;   /* 0x00000001 1 bit */
-    uint8_t pswP;    /* 0x00000001 1 bit */
+    uint8_t pswCY;      /*  */
+    uint8_t pswAC;      /*  */
+    uint8_t pswF0;      /*  */
+    uint8_t pswRS1;     /*  */
+    uint8_t pswRS0;     /*  */
+    uint8_t pswOV;      /*  */
+    uint8_t pswP;       /*  */
 } CPUMCS51State;
 
 typedef struct MCS51CPU {
@@ -56,9 +66,19 @@ typedef struct MCS51CPU {
     CPUMCS51State env;
 } MCS51CPU;
 
-int mcs51_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
-int mcs51_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
-vaddr mcs51_cpu_gdb_adjust_breakpoint(CPUState *cpu, vaddr addr);
+extern const VMStateDescription vms_mcs51_cpu;
+
+extern void mcs51_cpu_tcg_init(void);
+extern void mcs51_cpu_synchronize_from_tb(CPUState *cs, const TranslationBlock *tb);
+extern bool mcs51_cpu_exec_interrupt(CPUState *cpu, int int_req);
+extern bool mcs51_cpu_tlb_fill(CPUState *cs, vaddr address, int size, MMUAccessType access_type, int mmu_idx, bool probe, uintptr_t retaddr);
+extern void mcs51_cpu_do_interrupt(CPUState *cs);
+extern hwaddr mcs51_cpu_get_phys_page_debug(CPUState *cs, vaddr addr);
+extern int mcs51_cpu_memory_rw_debug(CPUState *cs, vaddr addr, uint8_t *buf, int len, bool is_write);
+
+extern int mcs51_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
+extern int mcs51_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
+extern vaddr mcs51_cpu_gdb_adjust_breakpoint(CPUState *cpu, vaddr addr);
 
 static inline uint8_t cpu_get_sreg(CPUMCS51State *env)
 {

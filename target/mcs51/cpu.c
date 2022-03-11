@@ -122,7 +122,7 @@ static void mcs51_cpu_set_pc(CPUState *cs, vaddr value)
 static void mcs51_cpu_disas_set_info(CPUState *cpu, disassemble_info *info)
 {
     info->mach = bfd_arch_avr;
-    // info->print_insn = mcs51_print_insn;
+    info->print_insn = print_insn_mcs51;
 }
 
 static void mcs51_cpu_initfn(Object *obj)
@@ -134,17 +134,17 @@ static void mcs51_cpu_initfn(Object *obj)
 #include "hw/core/sysemu-cpu-ops.h"
 
 static const struct SysemuCPUOps mcs51_sysemu_ops = {
-    // .get_phys_page_debug = avr_cpu_get_phys_page_debug,
+    .get_phys_page_debug = mcs51_cpu_get_phys_page_debug,
 };
 
 #include "hw/core/tcg-cpu-ops.h"
 
 static const struct TCGCPUOps mcs51_tcg_ops = {
-    // .initialize = avr_cpu_tcg_init,
-    // .synchronize_from_tb = avr_cpu_synchronize_from_tb,
-    // .cpu_exec_interrupt = avr_cpu_exec_interrupt,
-    // .tlb_fill = avr_cpu_tlb_fill,
-    // .do_interrupt = avr_cpu_do_interrupt,
+    .initialize = mcs51_cpu_tcg_init,
+    .synchronize_from_tb = mcs51_cpu_synchronize_from_tb,
+    .cpu_exec_interrupt = mcs51_cpu_exec_interrupt,
+    .tlb_fill = mcs51_cpu_tlb_fill,
+    .do_interrupt = mcs51_cpu_do_interrupt,
 };
 
 static void mcs51_cpu_class_init(ObjectClass *oc, void *data)
@@ -160,8 +160,8 @@ static void mcs51_cpu_class_init(ObjectClass *oc, void *data)
     cc->has_work                = mcs51_cpu_has_work;
     cc->dump_state              = mcs51_cpu_dump_state;
     cc->set_pc                  = mcs51_cpu_set_pc;
-    // cc->memory_rw_debug         = mcs51_cpu_memory_rw_debug;
-    // dc->vmsd                    = &vms_mcs51_cpu;
+    cc->memory_rw_debug         = mcs51_cpu_memory_rw_debug;
+    dc->vmsd                    = &vms_mcs51_cpu;
     cc->sysemu_ops              = &mcs51_sysemu_ops;
     cc->disas_set_info          = mcs51_cpu_disas_set_info;
     cc->gdb_read_register       = mcs51_cpu_gdb_read_register;

@@ -1,5 +1,5 @@
 /*
- * MCS-51 16bit timer
+ * MCS51 loader helpers
  *
  * Copyright (c) 2022 John Sanpe
  *
@@ -18,16 +18,12 @@
  * <http://www.gnu.org/licenses/lgpl-2.1.html>
  */
 
-#include "qemu/osdep.h"
-#include "hw/timer/mcs51-timer16.h"
-#include "migration/vmstate.h"
-#include "hw/irq.h"
-#include "hw/sysbus.h"
-#include "hw/qdev-clock.h"
-#include "qemu/timer.h"
-#include "qemu/log.h"
-#include "qemu/module.h"
-#include "qapi/error.h"
-#include "trace.h"
+#ifndef HW_AVR_BOOT_H
+#define HW_AVR_BOOT_H
 
+#include "hw/boards.h"
+#include "cpu.h"
 
+extern bool mcs51_load_firmware(MCS51CPU *cpu, MachineState *ms, MemoryRegion *mr, const char *firmware);
+
+#endif  /* HW_AVR_BOOT_H */

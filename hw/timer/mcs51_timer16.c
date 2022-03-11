@@ -1,5 +1,5 @@
 /*
- * MCS-51 8bit timer
+ * MCS-51 16bit timer
  *
  * Copyright (c) 2022 John Sanpe
  *
@@ -19,7 +19,7 @@
  */
 
 #include "qemu/osdep.h"
-#include "hw/timer/mcs51_timer8.h"
+#include "hw/timer/mcs51_timer16.h"
 #include "migration/vmstate.h"
 #include "hw/irq.h"
 #include "hw/sysbus.h"
@@ -30,27 +30,28 @@
 #include "qapi/error.h"
 #include "trace.h"
 
-static void mcs51_timer8_init(Object *obj)
+static void mcs51_timer16_init(Object *obj)
 {
 
 }
 
-static void mcs51_timer8_class_init(ObjectClass *klass, void *data)
+static void mcs51_timer16_class_init(ObjectClass *klass, void *data)
 {
 
 }
 
-static const TypeInfo mcs51_timer8_info = {
-    .name           = TYPE_MCS51_TIMER8,
+static const TypeInfo mcs51_timer16_info = {
+    .name           = TYPE_MCS51_TIMER16,
     .parent         = TYPE_SYS_BUS_DEVICE,
-    .instance_size  = sizeof(MCS51Timer8State),
-    .instance_init  = mcs51_timer8_init,
-    .class_init     = mcs51_timer8_class_init,
+    .instance_size  = sizeof(MCS51Timer16State),
+    .instance_init  = mcs51_timer16_init,
+    .class_init     = mcs51_timer16_class_init,
 };
 
-static void mcs51_timer8_register_types(void)
+static void mcs51_timer16_register_types(void)
 {
-    type_register_static(&mcs51_timer8_info);
+    type_register_static(&mcs51_timer16_info);
 }
 
-type_init(mcs51_timer8_register_types)
+type_init(mcs51_timer16_register_types)
+

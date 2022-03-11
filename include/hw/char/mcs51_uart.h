@@ -1,5 +1,5 @@
 /*
- * QEMU MCS-51 CPU helpers
+ * MCS-51 UART
  *
  * Copyright (c) 2022 John Sanpe
  *
@@ -18,10 +18,27 @@
  * <http://www.gnu.org/licenses/lgpl-2.1.html>
  */
 
-DEF_HELPER_1(wdr, void, env)
-DEF_HELPER_1(debug, noreturn, env)
-DEF_HELPER_1(break, noreturn, env)
-DEF_HELPER_1(sleep, noreturn, env)
-DEF_HELPER_1(unsupported, noreturn, env)
-DEF_HELPER_3(fullwr, void, env, i32, i32)
-DEF_HELPER_2(fullrd, tl, env, i32)
+#ifndef HW_CHAR_MCS51_UART_H
+#define HW_CHAR_MCS51_UART_H
+
+#include "hw/sysbus.h"
+#include "chardev/char-fe.h"
+#include "qom/object.h"
+
+#define UART_SCON_SM0   (1 << 7)
+#define UART_SCON_SM1   (1 << 6)
+#define UART_SCON_SM2   (1 << 5)
+#define UART_SCON_REN   (1 << 4)
+#define UART_SCON_TB8   (1 << 3)
+#define UART_SCON_RB8   (1 << 2)
+#define UART_SCON_TI    (1 << 1)
+#define UART_SCON_RI    (1 << 0)
+
+#define TYPE_MCS51_UART "mcs51-uart"
+OBJECT_DECLARE_SIMPLE_TYPE(MCS51UartState, MCS51_UART)
+
+struct MCS51UartState {
+
+};
+
+#endif  /* HW_CHAR_MCS51_UART_H */
